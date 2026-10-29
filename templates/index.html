@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Medication &amp; Care Assistant for Elderly</title>
+
+    <meta
+        name="description"
+        content="A medication and elderly-care information assistant for older adults and caregivers."
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+<header class="site-header">
+    <div class="brand">
+        <div class="brand-icon" aria-hidden="true">✚</div>
+        <div>
+            <p class="brand-title">Smart Medication &amp; Care Assistant for Elderly</p>
+            <p class="brand-subtitle">Support for safer everyday care</p>
+        </div>
+    </div>
+
+    <nav class="header-actions" aria-label="Main navigation">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/caregivers">Caregiver Contacts</a>
+    </nav>
+</header>
+
+<main>
+    <section class="main-layout">
+        <div class="hero-content">
+            <span class="eyebrow">Compassionate care, made simpler</span>
+
+            <h1>
+                Helping you care for the
+                <span>people who matter most.</span>
+            </h1>
+
+            <p class="hero-description">
+                Get clear, easy-to-understand information about medicine
+                safety and elderly care. Designed to support older adults
+                and the people who care for them.
+            </p>
+
+            <div class="hero-points">
+                <div class="hero-point">
+                    <div class="point-icon" aria-hidden="true">✓</div>
+                    <div>
+                        <strong>Medication safety</strong>
+                        <p>Understand general medicine storage and safety practices.</p>
+                    </div>
+                </div>
+
+                <div class="hero-point">
+                    <div class="point-icon" aria-hidden="true">♡</div>
+                    <div>
+                        <strong>Everyday elderly care</strong>
+                        <p>Explore practical care and fall-prevention information.</p>
+                    </div>
+                </div>
+
+                <div class="hero-point">
+                    <div class="point-icon" aria-hidden="true">☎</div>
+                    <div>
+                        <strong>Caregiver contacts</strong>
+                        <p>Manage trusted caregiver and healthcare contact details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="assistant-card" aria-labelledby="assistantTitle">
+            <div class="assistant-heading">
+                <div class="assistant-icon" aria-hidden="true">💚</div>
+                <div>
+                    <h2 id="assistantTitle">ASK YOUR CARE ASSISTANT</h2>
+                    <p>How can I help you today?</p>
+                </div>
+            </div>
+
+            <form id="questionForm">
+                <label class="form-label" for="questionInput">
+                    Enter your question
+                </label>
+
+                <textarea
+                    id="questionInput"
+                    class="question-box"
+                    name="question"
+                    maxlength="2000"
+                    placeholder="For example, how should older adults store their medicines?"
+                    required
+                >{{ initial_question | default('', true) }}</textarea>
+
+                <div class="assistant-actions">
+                    <button
+                        id="askButton"
+                        class="button button-primary ask-button"
+                        type="submit"
+                    >
+                        <span aria-hidden="true">✦</span>
+                        <span id="askButtonText">Ask your assistant</span>
+                    </button>
+
+                    <button
+                        id="voiceButton"
+                        class="button button-secondary voice-button"
+                        type="button"
+                        aria-label="Speak your question"
+                        title="Speak your question"
+                    >
+                        🎙️
+                    </button>
+                </div>
+
+                <p id="voiceStatus" class="voice-status" aria-live="polite"></p>
+            </form>
+
+            <div class="quick-questions">
+                <h3>Try asking</h3>
+                <div class="quick-question-list">
+                    <button class="quick-question" type="button"
+                        data-question="How should older adults store their medicines?">
+                        Medicine storage
+                    </button>
+                    <button class="quick-question" type="button"
+                        data-question="What should I do if I miss a dose of medicine?">
+                        Missed dose
+                    </button>
+                    <button class="quick-question" type="button"
+                        data-question="How can I prevent falls in older adults?">
+                        Fall prevention
+                    </button>
+                </div>
+            </div>
+
+            <section
+                id="answerCard"
+                class="answer-card"
+                aria-labelledby="answerTitle"
+                aria-live="polite"
+            >
+                <div class="answer-header">
+                    <h3 id="answerTitle">Your answer</h3>
+                    <span id="answerStatus" class="brand-subtitle"></span>
+                </div>
+
+                <div id="loadingIndicator" class="loading-indicator hidden">
+                    <span class="loading-dot" aria-hidden="true"></span>
+                    <span>Preparing your answer...</span>
+                </div>
+
+                <div id="answerContent" class="answer-content">{% if initial_answer %}{{ initial_answer }}{% else %}<span class="answer-placeholder">Your answer will appear here.</span>{% endif %}</div>
+
+                <div class="answer-footer">
+                    <button
+                        id="copyAnswerButton"
+                        class="button button-secondary copy-button"
+                        type="button"
+                    >
+                        Copy answer
+                    </button>
+                </div>
+            </section>
+
+            <p class="brand-subtitle">
+                This assistant provides general information, not a medical
+                diagnosis or a substitute for professional advice.
+            </p>
+        </section>
+    </section>
+
+    <section class="feature-section">
+        <h2>Care support at your fingertips</h2>
+
+        <div class="feature-grid">
+            <article class="feature-card">
+                <div class="feature-icon" aria-hidden="true">💊</div>
+                <h3>Medication safety</h3>
+                <p>Ask about safe storage, missed doses, and medicine-handling practices.</p>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon" aria-hidden="true">🤝</div>
+                <h3>Caregiver contacts</h3>
+                <p>Maintain separate primary, backup, and doctor contacts for each elderly person.</p>
+                <a href="/caregivers">Manage contacts →</a>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon" aria-hidden="true">🛡️</div>
+                <h3>Safety guidance</h3>
+                <p>Find general first-aid information and learn when to seek urgent help.</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>
+        Smart Medication &amp; Care Assistant for Elderly
+    </p>
+    <p>
+        In a medical emergency, contact emergency services immediately.
+        In India, call 112 for emergency assistance.
+    </p>
+</footer>
+
+<script>
+"use strict";
+
+const questionForm = document.getElementById("questionForm");
+const questionInput = document.getElementById("questionInput");
+const askButton = document.getElementById("askButton");
+const askButtonText = document.getElementById("askButtonText");
+const answerContent = document.getElementById("answerContent");
+const answerStatus = document.getElementById("answerStatus");
+const loadingIndicator = document.getElementById("loadingIndicator");
+const copyAnswerButton = document.getElementById("copyAnswerButton");
+const voiceButton = document.getElementById("voiceButton");
+const voiceStatus = document.getElementById("voiceStatus");
+
+let recognition = null;
+let isListening = false;
+let requestInProgress = false;
+
+function showAnswer(text) {
+    // textContent prevents model output from being interpreted as HTML.
+    answerContent.textContent = text || "";
+}
+
+function setLoading(loading) {
+    requestInProgress = loading;
+    askButton.disabled = loading;
+    loadingIndicator.classList.toggle("hidden", !loading);
+    askButtonText.textContent = loading
+        ? "Please wait..."
+        : "Ask your assistant";
+}
+
+async function askQuestion(question) {
+    const normalizedQuestion = String(question || "").trim();
+
+    if (!normalizedQuestion) {
+        showAnswer("Please enter a question before submitting.");
+        answerStatus.textContent = "Question required";
+        questionInput.focus();
+        return;
+    }
+
+    if (normalizedQuestion.length > 2000) {
+        showAnswer("Please keep your question under 2000 characters.");
+        answerStatus.textContent = "Question too long";
+        return;
+    }
+
+    if (requestInProgress) {
+        return;
+    }
+
+    questionInput.value = normalizedQuestion;
+    setLoading(true);
+    answerStatus.textContent = "";
+    showAnswer("");
+
+    try {
+        const response = await fetch("/ask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ question: normalizedQuestion })
+        });
+
+        const contentType = response.headers.get("content-type") || "";
+
+        if (!contentType.includes("application/json")) {
+            throw new Error(
+                "The server returned an unexpected response. "
+                + "Please check that Flask is running correctly."
+            );
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.answer || data.message || "Unable to process your question."
+            );
+        }
+
+        showAnswer(data.answer || "No answer was returned.");
+
+        const statusLabels = {
+            answered: "Answer ready",
+            emergency: "Emergency guidance",
+            first_aid: "First-aid guidance",
+            medication_safety: "Medication safety",
+            insufficient_evidence: "Limited information",
+            error: "Unable to answer"
+        };
+
+        answerStatus.textContent =
+            statusLabels[data.status] || "Answer ready";
+
+    } catch (error) {
+        showAnswer(
+            error.message ||
+            "Something went wrong. Please try again."
+        );
+        answerStatus.textContent = "Request failed";
+    } finally {
+        setLoading(false);
+    }
+}
+
+questionForm.addEventListener("submit", async event => {
+    event.preventDefault();
+    await askQuestion(questionInput.value);
+});
+
+document.querySelectorAll(".quick-question").forEach(button => {
+    button.addEventListener("click", async () => {
+        const question = button.dataset.question || "";
+        questionInput.value = question;
+        await askQuestion(question);
+    });
+});
+
+copyAnswerButton.addEventListener("click", async () => {
+    const answer = answerContent.innerText.trim();
+
+    if (!answer || answer === "Your answer will appear here.") {
+        answerStatus.textContent = "There is no answer to copy yet.";
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(answer);
+        copyAnswerButton.textContent = "Copied!";
+        answerStatus.textContent = "Answer copied";
+
+        window.setTimeout(() => {
+            copyAnswerButton.textContent = "Copy answer";
+        }, 1600);
+    } catch (error) {
+        // Fallback for browsers without Clipboard API permission.
+        const temporary = document.createElement("textarea");
+        temporary.value = answer;
+        temporary.style.position = "fixed";
+        temporary.style.opacity = "0";
+        document.body.appendChild(temporary);
+        temporary.select();
+
+        try {
+            const copied = document.execCommand("copy");
+            answerStatus.textContent = copied
+                ? "Answer copied"
+                : "Copy was blocked by your browser.";
+        } catch (copyError) {
+            answerStatus.textContent = "Copy was blocked by your browser.";
+        } finally {
+            temporary.remove();
+        }
+    }
+});
+
+function initializeVoiceInput() {
+    const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        voiceButton.disabled = true;
+        voiceStatus.textContent =
+            "Voice input is not supported in this browser. You can type your question.";
+        return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+        isListening = true;
+        voiceButton.textContent = "⏹️";
+        voiceButton.setAttribute("aria-label", "Stop voice input");
+        voiceStatus.textContent = "Listening... Please speak now.";
+    };
+
+    recognition.onresult = async event => {
+        const transcript = event.results?.[0]?.[0]?.transcript;
+
+        if (transcript) {
+            questionInput.value = transcript.trim();
+            voiceStatus.textContent = "Question recognized. Preparing answer...";
+            await askQuestion(transcript);
+        }
+    };
+
+    recognition.onerror = event => {
+        voiceStatus.textContent = event.error === "not-allowed"
+            ? "Microphone access was denied. Allow microphone access in your browser."
+            : "Voice input failed. Please type your question instead.";
+    };
+
+    recognition.onend = () => {
+        isListening = false;
+        voiceButton.textContent = "🎙️";
+        voiceButton.setAttribute("aria-label", "Speak your question");
+
+        if (voiceStatus.textContent === "Listening... Please speak now.") {
+            voiceStatus.textContent = "No speech was recognized. Please try again.";
+        }
+    };
+
+    voiceButton.addEventListener("click", () => {
+        if (isListening) {
+            recognition.stop();
+            return;
+        }
+
+        try {
+            recognition.start();
+        } catch (error) {
+            voiceStatus.textContent =
+                "Voice input is already starting. Please wait a moment.";
+        }
+    });
+}
+
+initializeVoiceInput();
+</script>
+</body>
+</html>
